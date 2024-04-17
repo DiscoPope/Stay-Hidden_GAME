@@ -7,6 +7,12 @@ public class Player_Health : MonoBehaviour
 
     public float health;
     public float maxHealth = 10f;
+    public float healthRegeneration = 1f; //Amount of health gained
+
+    public float healthRegenCooldown = 2f; //Time between health gain
+    float lastHealTime;
+
+    public bool isHidden = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,15 +27,53 @@ public class Player_Health : MonoBehaviour
     }
 
 
-
     public void TakeDamage (float amount)
     {
-        health -= amount;
 
-        if (health <= 0)
+        if (isHidden == false) //Player can't take damage while being hidden
         {
-            Destroy(gameObject);
+            health -= amount;
+
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+
         }
-        
+    
     }
+
+
+    private void OnTriggerStay2D(Collider2D collision) 
+    {
+        if (Time.time - lastHealTime < healthRegenCooldown) return;
+
+        if (collision.gameObject.CompareTag("Darkness"))
+        {
+            isHidden = true;
+
+            Healing();
+
+            lastHealTime = Time.time;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) 
+    {
+
+        if (collision.gameObject.CompareTag("Darkness"))
+        {
+            isHidden = false;
+        }
+    }
+
+
+    public void Healing ()
+    {
+        if (health < maxHealth)
+        {
+            health += healthRegeneration;
+        }
+    }
+
 }

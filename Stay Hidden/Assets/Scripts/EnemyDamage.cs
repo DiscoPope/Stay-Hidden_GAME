@@ -11,18 +11,23 @@ public class EnemyDamage : MonoBehaviour
 
     float lastAttackTime;
 
-    private void OnCollisionStay2D(Collision2D collision) 
+    private void OnCollisionStay2D(Collision2D collision)
     {
         // Check if we took damage recently
         if (Time.time - lastAttackTime < attackCooldown) return;
 
-        //If 
+
+        
         if(collision.gameObject.CompareTag("Player")) 
         {
-            playerHealth.TakeDamage(damage);
+            if (playerHealth.isHidden == false);
+            {
+                playerHealth.TakeDamage(damage);
 
-            // Note when the player took damage
-            lastAttackTime = Time.time;
+                // Note when the player took damage
+                lastAttackTime = Time.time;
+            }
+
         }
     }
 }
