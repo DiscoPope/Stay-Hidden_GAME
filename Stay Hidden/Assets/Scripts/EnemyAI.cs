@@ -39,12 +39,12 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("chase is true");
             Chase();
         }
-        else if(lOS.lost == true)
-        {
-            lOS.lost = false;
-            Debug.Log("target lost");
-            StartCoroutine(Confused());
-        }
+     // else if(lOS.lost == true)
+     // {
+     //     lOS.lost = false;
+     //     Debug.Log("target lost");
+     //     StartCoroutine(Confused());
+     // }
         else
         {
            
@@ -115,7 +115,7 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
             Debug.Log("flipped to right");
             isFacingRight = false;
-            lOS.rayDirection = 1f;
+            lOS.rayDirection = -1f;
 
         }
         if (isFacingLeft == true)
@@ -123,7 +123,7 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
             Debug.Log("flipped to left");
             isFacingLeft = false;
-            lOS.rayDirection = -1f;
+            lOS.rayDirection = 1f;
 
         }
     }
